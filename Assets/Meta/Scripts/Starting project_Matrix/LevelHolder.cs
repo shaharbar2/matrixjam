@@ -101,6 +101,8 @@ namespace Basic_Matrix
         public void ExitLevel(Exit exit_to)
         {
             PlayerData.Data.AddLevel(num_level);
+            // TODO: link total number of levels
+            GlobalUI.Instance.UpdateGamesDoneFields(PlayerData.Data.NumLevels.ToString(), "7"); 
             SceneManager.SceneMang.LoadScene(exit_to.connect_to.scene_num, exit_to.connect_to.target_portal_num);
         }
         public void EnterLevel(int num_ent)

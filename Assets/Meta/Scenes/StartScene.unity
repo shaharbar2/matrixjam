@@ -789,7 +789,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &622633830
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1057,7 +1057,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &983615717
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1127,7 +1127,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 983615716}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 445156302}
@@ -1151,6 +1151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1016255179}
   - component: {fileID: 1016255180}
+  - component: {fileID: 1016255181}
   m_Layer: 8
   m_Name: GlobalUI
   m_TagString: Untagged
@@ -1185,6 +1186,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a7f0c15b382f04cb8aabbb0f57b4a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1016255181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016255178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be853f4358f1e2a4baec7660fbd77242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Container: {fileID: 983615716}
+  SkipsLeftText: {fileID: 1021858100}
+  GamesDoneText: {fileID: 1431268224}
+  ResumeButton: {fileID: 1260077817}
+  SkipButton: {fileID: 406016819}
+  RestartButton: {fileID: 293123376}
+  ExitButton: {fileID: 781156458}
 --- !u!1 &1021858098
 GameObject:
   m_ObjectHideFlags: 0
