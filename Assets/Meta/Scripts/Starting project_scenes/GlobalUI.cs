@@ -17,32 +17,42 @@ namespace Basic_Matrix
         public GameObject Container;
         public Text SkipsLeftText;
         public Text GamesDoneText;
-        public Button ResumeButton;
+        public Button UndoButton;
         public Button SkipButton;
         public Button RestartButton;
         public Button ExitButton;
-
+        public Button XButton;
+        
         // Start is called before the first frame update
         void Start()
         {
             // initialize buttons
+            XButton.onClick.AddListener(() =>
+            {
+                ToggleUI();
+            });
+            
             ExitButton.onClick.AddListener(() =>
             {
-                SceneManager.SceneMang.LoadScene("Start");
+                SceneManager.SceneMang.LoadScene("StartScene");
+                ToggleUI();
             });
 
             RestartButton.onClick.AddListener(() =>
             {
                 SceneManager.SceneMang.ResetLevelScene();
+                ToggleUI();
             });
             
             SkipButton.onClick.AddListener(() =>
             {
                SkipLevel();
+               ToggleUI();
             });
             
-            ResumeButton.onClick.AddListener(() =>
+            UndoButton.onClick.AddListener(() =>
             {
+                UndoLevel();
                 ToggleUI();
             });
             
@@ -73,7 +83,7 @@ namespace Basic_Matrix
 
         public void UpdateSkipsFields(string skipsLeft, string skipsTotal)
         {
-            SkipsLeftText.text = $"{skipsLeft}/{skipsTotal}";
+            SkipsLeftText.text = $"Skip Level {skipsLeft}/{skipsTotal}";
         }
         
         public void UpdateGamesDoneFields(string gamesDone, string gamesDoneTotal)
@@ -92,6 +102,11 @@ namespace Basic_Matrix
             _currentSkipsAmount++;
 
             UpdateSkipsFields(_currentSkipsAmount.ToString(), TOTAL_SKIPS.ToString());
+        }
+        
+        private void UndoLevel()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

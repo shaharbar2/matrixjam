@@ -51,9 +51,9 @@ namespace Basic_Matrix
 
         public void ResetLevelScene()
         {
-            // check scene is not on start or level and actually a level scene
+            // check scene is not on start or end and actually a level scene
             var sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-            if (sceneName != "Start" && sceneName != "End")
+            if (sceneName != "StartScene" && sceneName != "EndScene")
             {
                 LoadScene(sceneName);
             }
