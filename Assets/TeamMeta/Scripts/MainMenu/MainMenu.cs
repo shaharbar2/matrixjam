@@ -3,20 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+// TODO:
+// - Start the game itself in the ButtonHandler_PlayGame() function
+// - Call MainMenu.NotifyGameIsWon() when game is won and before switching to main menu
+
+
 namespace MatrixJam.TeamMeta
 {
     public class MainMenu : MonoBehaviour
     {
+        private static bool gameWasWon = false;
+        
         // ---------------- Main menu
         
+        [Header("Main Menu buttons")]
         [SerializeField]
         private List<Button> mainButtons;
         
-        // submenus
+        [Header("Submenus")]
         [SerializeField]
         private GameObject rules;
         [SerializeField]
         private GameObject credits;
+        
+        [Header("Submenu additional graphics")]
+        [SerializeField]
+        public GameObject youWinGraphics;
+        
+        public void Start()
+        {
+            // Main menu
+            rules.SetActive(false);
+            credits.SetActive(false);
+            
+            MaybeShowYouWon();
+        }
         
         private void SetMainButtons(bool newInteractableStatus)
         {
@@ -24,6 +46,31 @@ namespace MatrixJam.TeamMeta
                 button.interactable = newInteractableStatus;
             }
         }
+        
+        
+        
+        
+        
+        // ---------------- After you win game
+        
+        static public void NotifyGameIsWon()
+        {
+            gameWasWon = true;
+        }
+        
+        private void MaybeShowYouWon()
+        {
+            // If won game
+            if (gameWasWon) {
+                youWinGraphics.SetActive(true);
+                ButtonHandler_ShowCredits();
+                // Disable
+                gameWasWon = false;
+            } else {
+                youWinGraphics.SetActive(false);
+            }
+        }
+        
         
         
         
@@ -37,13 +84,13 @@ namespace MatrixJam.TeamMeta
         
         public void ButtonHandler_ShowRules()
         {
-            rules.SetActiveRecursively(true);
+            rules.SetActive(true);
             SetMainButtons(false);
         }
         
         public void ButtonHandler_ShowCredits()
         {
-            credits.SetActiveRecursively(true);
+            credits.SetActive(true);
             SetMainButtons(false);
         }
         
@@ -59,8 +106,8 @@ namespace MatrixJam.TeamMeta
         
         public void ButtonHandler_BackToMenu()
         {
-            rules.SetActiveRecursively(false);
-            credits.SetActiveRecursively(false);
+            rules.SetActive(false);
+            credits.SetActive(false);
             SetMainButtons(true);
         }
     }
