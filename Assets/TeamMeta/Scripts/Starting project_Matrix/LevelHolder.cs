@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Basic_Matrix;
+using System;
 
 namespace Basic_Matrix
 {
     public class LevelHolder : MonoBehaviour
     {
-        LinkedList<Connection> entries = new LinkedList<Connection>();
-        LinkedList<Connection> exits = new LinkedList<Connection>();
-        int num_level;
+        Entrance[] entries;
+        Exit[] exits;
+        int num_lvel;
+        int ent_num;
+
         static LevelHolder level;
         public static LevelHolder Level
         {
@@ -16,150 +20,80 @@ namespace Basic_Matrix
             {
                 if (level == null)
                 {
-                    level = GameObject.FindObjectOfType<LevelHolder>();
+
+                    level = MonoBehaviour.FindObjectOfType<LevelHolder>();
                 }
                 return level;
+
             }
         }
 
-        public void AddEnt(Entrance new_en)
+        private void Start()
         {
-            LinkedListNode<Connection> runner;
-            RemoveEnt();
-            runner = exits.First;
-            while (runner != null)
+            if (SceneManager.SceneMang != null)
             {
-                if (runner.Value.SamePortal(new_en))
-                {
-                    return;
-                }
-                runner = runner.Next;
-            }
-            new_en.num_ent = entries.Count;
-            new_en.connect_to = entries.Last.Value;
-            entries.AddLast(new Connection(new_en, entries.Count));
-        }
-        public void AddExit(Exit new_ex)
-        {
-            LinkedListNode<Connection> runner;
-            RemoveExit();
-            runner = exits.First;
-            while (runner != null)
-            {
-                if (runner.Value.SamePortal(new_ex))
-                {
-                    return;
-                }
-                runner = runner.Next;
-            }
-            exits.AddLast(new Connection(new_ex, exits.Count));
-            new_ex.num_exit = exits.Count;
-            new_ex.connect_to = exits.Last.Value;
-        }
-        public void RemoveEnt()
-        {
-            LinkedListNode<Connection> runner;
-            LinkedListNode<Connection> runner_next;
-            int num_fix = 0;
-            runner = entries.First;
-            while (runner != null)
-            {
-                runner_next = runner.Next;
-                if (runner.Value.isBroke())
-                {
-                    entries.Remove(runner.Value);
-                    num_fix--;
-                }
-                else
-                {
-                    runner.Value.NumChange(num_fix);
-                }
-                runner = runner_next;
+                EnterLevel(PlayerData.Data.current_level, SceneManager.SceneMang.Numentrence);
             }
         }
-        public void RemoveExit()
+
+
+        public int Current_Level
         {
-            LinkedListNode<Connection> runner;
-            LinkedListNode<Connection> runner_next;
-            int num_fix = 0;
-            runner = exits.First;
-            while (runner != null)
+            get
             {
-                runner_next = runner.Next;
-                if (runner.Value.isBroke())
-                {
-                    entries.Remove(runner.Value);
-                    num_fix--;
-                }
-                else
-                {
-                    runner.Value.NumChange(num_fix);
-                }
-                runner = runner_next;
+                return num_lvel;
+            }
+        }
+        public int Entrnce_Used
+        {
+            get
+            {
+                return ent_num;
             }
         }
         public void ExitLevel(Exit exit_to)
         {
-            PlayerData.Data.AddLevel(num_level);
-            // TODO: link total number of levels
-            GlobalUI.Instance.UpdateGamesDoneFields(PlayerData.Data.NumLevels.ToString(), "7"); 
-            SceneManager.SceneMang.LoadScene(exit_to.connect_to.scene_num, exit_to.connect_to.target_portal_num);
+            if (SceneManager.SceneMang != null)
+            {
+                PlayerData.Data.AddLevel(num_lvel, ent_num, exit_to.Num);
+                SceneManager.SceneMang.LoadSceneFromExit(num_lvel, exit_to.Num);
+            }
+            else
+            {
+                Debug.Log("Game over at exit: " + exit_to.Num);
+
+            }
         }
-        public void EnterLevel(int num_ent)
+
+        public void EnterLevel(int lvl_num, int num_ent)
         {
-            PlayerData.Data.current_level = num_level;
+
+            //run this to start the level
+            num_lvel = lvl_num;
+            ent_num = num_ent;
             OrganizeEnters();
             OrganizeExits();
-            Connection enter = ConnectNum(entries, num_ent);
-            if (enter.ScenePortal == null || enter.ScenePortal is Exit)
-            {
-                return;
-            }
-            (enter.ScenePortal as Entrance).Enter();
+            entries[num_ent].Enter();
+
         }
-        public Connection ConnectNum(LinkedList<Connection> data, int num)
-        {
-            LinkedListNode<Connection> runner = data.First;
-            for (int i = 0; i < num; i++)
-            {
-                if (runner == null)
-                {
-                    return new Connection(null, -100);
-                }
-                runner = runner.Next;
-            }
-            if (runner == null)
-            {
-                return new Connection(null, -100);
-            }
-            return runner.Value;
-        }
+
+
         void OrganizeEnters()
         {
             Entrance[] all_enter = GameObject.FindObjectsOfType<Entrance>();
-            Entrance[] order_enter = new Entrance[all_enter.Length];
+            entries = new Entrance[all_enter.Length];
             foreach (Entrance runner in all_enter)
             {
-                order_enter[runner.num_ent] = runner;
-            }
-            entries.Clear();
-            foreach (Entrance runner in order_enter)
-            {
-                AddEnt(runner);
+                entries[runner.Num] = runner;
             }
         }
         void OrganizeExits()
         {
-            Exit[] all_enter = GameObject.FindObjectsOfType<Exit>();
-            Exit[] order_enter = new Exit[all_enter.Length];
-            foreach (Exit runner in all_enter)
+            Exit[] all_exit = GameObject.FindObjectsOfType<Exit>();
+            exits = new Exit[all_exit.Length];
+            foreach (Exit runner in all_exit)
             {
-                order_enter[runner.num_exit] = runner;
-            }
-            entries.Clear();
-            foreach (Exit runner in order_enter)
-            {
-                AddExit(runner);
+                exits[runner.Num] = runner;
             }
         }
     }

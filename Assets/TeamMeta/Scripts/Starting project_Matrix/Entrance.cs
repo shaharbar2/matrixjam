@@ -6,10 +6,18 @@ namespace Basic_Matrix
 {
     public class Entrance : Portal
     {
-         public int num_ent;
-         public void Enter()
-         {
-            GetComponent<StartHelper>().StartHelp(num_ent);
-         }
+        public void Enter()
+        {
+            if (GetComponent<StartHelper>() != null)
+            {
+                GetComponent<StartHelper>().StartHelp(num_portal);
+            }
+            else
+            {
+                Debug.Log("No StartHelper found on entrance!");
+               
+            }
+        }
+
     }
 }

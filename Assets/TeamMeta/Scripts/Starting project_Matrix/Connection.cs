@@ -5,46 +5,25 @@ using System;
 
 namespace Basic_Matrix
 {
+
+
+    //this script is used it two ways:
+    //A: to connect an exit (scene_from,portal_from) to the entrence (scene_to,portal_to) it need to load, if this exit is used.
+    //B: to save the trip a player has made in a level. from entrenece (scene from[level num],portal_from) to exit(scene_to[level], portal_to).
+
     [Serializable]
     public struct Connection
     {
-         public int scene_num; //number of scene this connect to.
-         public int target_portal_num; //number of entrence/exit in the target scene this connect to
-         int current_portal; //number of entrence/exit in the current scene this connect to
-         Portal scene_portal;
-
-        public Portal ScenePortal
+        public int scene_from;
+        public int portal_from;
+        public int scene_to; //number of scene this connect to.
+        public int portal_to; //number of entrence/exit in the target scene this connect to
+        public Connection(int ent_sce, int ent_por, int exit_sce, int exit_por)
         {
-            get
-            {
-                return scene_portal;
-            }
-        }
-        
-        public Connection(Portal here_portal, int num_port)
-        {
-            scene_portal = here_portal;
-            scene_num = -2;
-            current_portal = num_port;
-            target_portal_num = -2;
-        }
-
-        public bool SamePortal(Portal given)
-        {
-            return (given.Equals(scene_portal));
-        }
-        public bool isBroke()
-        {
-            if(scene_portal == null)
-            {
-                return true;
-            }
-            return false;
-        }
-        public void NumChange(int change)
-        {
-            current_portal += change;
-            scene_portal.Num += change;
+            scene_from = ent_sce;
+            portal_from = ent_por;
+            scene_to = exit_sce;
+            portal_to = exit_por;
         }
     }
 }

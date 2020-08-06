@@ -34,7 +34,7 @@ namespace Basic_Matrix
             
             ExitButton.onClick.AddListener(() =>
             {
-                SceneManager.SceneMang.LoadScene("StartScene");
+                SceneManager.SceneMang.LoadScene(-1,0);
                 ToggleUI();
             });
 

@@ -7,6 +7,9 @@ namespace Basic_Matrix
     public class SceneManager : MonoBehaviour
     {
 
+        public LevelConnects[] all_connects;
+        public Object[] play_scenes;
+        private int num_entrence;
         private static SceneManager scenemg;
         public static SceneManager SceneMang
         {
@@ -19,46 +22,77 @@ namespace Basic_Matrix
                 return scenemg;
             }
         }
-
-        public void LoadScene(int num_sce,int num_port)
+        public int Numentrence
         {
-            switch(num_sce)
+            get
+            {
+                return num_entrence;
+            }
+        }
+        public void LoadScene(int num_sce, int num_port)
+        {
+
+            switch (num_sce)
             {
                 case -1:
                     {
-                        LoadScene("Start");
+                        LoadSceneFromName("Start");
                         break;
                     }
                 case -2:
                     {
-                        LoadScene("End");
+                        LoadSceneFromName("End");
                         break;
                     }
                 default:
                     {
-                        LoadScene("Scene_" + num_sce);
-                        LevelHolder.Level.EnterLevel(num_port);
+                        if (num_sce >= 0)
+                        {
+                            num_entrence = num_port;
+                            PlayerData.Data.current_level = num_sce;
+                            LoadSceneFromNumber(num_sce);
+                        }
                         break;
                     }
             }
-          
+
+        }
+        public void LoadSceneFromConnectionMem(Connection con)
+        {
+            LoadScene(con.scene_from, con.portal_from);
+        }
+        public void LoadSceneFromExit(int num_sce, int int_exit)
+        {
+            Connection ent_point = FindConnectTo(num_sce, int_exit);
+            LoadScene(ent_point.scene_to, ent_point.portal_to);
+        }
+        public void LoadSceneFromNumber(int num_scn)
+        {
+            LoadSceneFromName(play_scenes[num_scn - 1].name);
         }
 
-        public void LoadScene(string name)
+        public void LoadSceneFromName(string name)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(name);
         }
-
+        public Connection FindConnectTo(int level, int exit)
+        {
+            return all_connects[level].FindConnect(exit, true);
+        }
+        public void LoadRandomScene()
+        {
+            int start_sce = 1 + Random.Range(0, PlayerData.Data.NumGames);
+            LoadScene(start_sce, 0);
+        }
         public void ResetLevelScene()
         {
             // check scene is not on start or end and actually a level scene
             var sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
             if (sceneName != "StartScene" && sceneName != "EndScene")
             {
-                LoadScene(sceneName);
+                LoadSceneFromName(sceneName);
             }
         }
-
     }
 }
 
