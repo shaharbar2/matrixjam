@@ -46,7 +46,7 @@ namespace MatrixJam
             }
             else
             {
-                EnterDefault(0); // - change to number of group!
+                EnterDefault(-1); // - change to number of group!
             }
         }
 
