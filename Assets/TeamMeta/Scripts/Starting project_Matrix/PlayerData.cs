@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Basic_Matrix
+namespace MatrixJam
 {
     public class PlayerData : MonoBehaviour
     {

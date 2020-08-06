@@ -42,7 +42,7 @@ namespace MatrixJam.TeamMeta
             }
             else
             {
-                RunSetup();
+                Debug.LogError("No team file found, please run setup (MatrixGameJam > Setup) before continuing");
             }
         }
         
