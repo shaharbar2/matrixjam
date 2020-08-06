@@ -4,7 +4,7 @@ using UnityEngine;
 using MatrixJam;
 using System;
 
-namespace MatrixJam
+namespace MatrixJam.TeamMeta
 {
     public class LevelHolder : MonoBehaviour
     {
@@ -46,8 +46,8 @@ namespace MatrixJam
             }
             else
             {
-                EnterDefault(-1); // - change to number of group!
-            }
+                EnterDefault(GameJamSetup._teamNumber);
+            } 
         }
 
 

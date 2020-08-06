@@ -18,7 +18,7 @@ namespace MatrixJam.TeamMeta
 !Assets/Team{0}.meta
 #MATRIX_JAM_END";
         private static string _teamNumberString = "";
-        private static int _teamNumber;
+        public static int _teamNumber;
 
         private static string _teamNumberFilePath =
             Path.Combine(Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "Assets"),"TeamMeta"), "teamNumber.txt");
