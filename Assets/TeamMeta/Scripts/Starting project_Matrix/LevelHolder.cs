@@ -6,9 +6,11 @@ namespace Basic_Matrix
 {
     public class LevelHolder : MonoBehaviour
     {
-        LinkedList<Connection> entries = new LinkedList<Connection>();
-        LinkedList<Connection> exits = new LinkedList<Connection>();
-        int num_level;
+        LinkedList<Portal> entries = new LinkedList<Portal>();
+        LinkedList<Portal> exits = new LinkedList<Portal>();
+        int num_lvel;
+        int ent_num;
+        public int defentr = 0;
         static LevelHolder level;
         public static LevelHolder Level
         {
@@ -21,118 +23,66 @@ namespace Basic_Matrix
                 return level;
             }
         }
-
+        public int Current_Level
+        {
+            get
+            {
+                return num_lvel;
+            }
+        }
+        public int Entrnce_Used
+        {
+            get
+            {
+                return ent_num;
+            }
+        }
         public void AddEnt(Entrance new_en)
         {
-            LinkedListNode<Connection> runner;
-            RemoveEnt();
-            runner = exits.First;
-            while (runner != null)
+            if (!(entries.Contains(new_en)))
             {
-                if (runner.Value.SamePortal(new_en))
-                {
-                    return;
-                }
-                runner = runner.Next;
+                entries.AddLast(new_en);
             }
-            new_en.num_ent = entries.Count;
-            new_en.connect_to = entries.Last.Value;
-            entries.AddLast(new Connection(new_en, entries.Count));
         }
         public void AddExit(Exit new_ex)
         {
-            LinkedListNode<Connection> runner;
-            RemoveExit();
-            runner = exits.First;
-            while (runner != null)
+            if (!(exits.Contains(new_ex)))
             {
-                if (runner.Value.SamePortal(new_ex))
-                {
-                    return;
-                }
-                runner = runner.Next;
-            }
-            exits.AddLast(new Connection(new_ex, exits.Count));
-            new_ex.num_exit = exits.Count;
-            new_ex.connect_to = exits.Last.Value;
-        }
-        public void RemoveEnt()
-        {
-            LinkedListNode<Connection> runner;
-            LinkedListNode<Connection> runner_next;
-            int num_fix = 0;
-            runner = entries.First;
-            while (runner != null)
-            {
-                runner_next = runner.Next;
-                if (runner.Value.isBroke())
-                {
-                    entries.Remove(runner.Value);
-                    num_fix--;
-                }
-                else
-                {
-                    runner.Value.NumChange(num_fix);
-                }
-                runner = runner_next;
+                exits.AddLast(new_ex);
             }
         }
-        public void RemoveExit()
+        public void CleanList(LinkedList<Portal> list)
         {
-            LinkedListNode<Connection> runner;
-            LinkedListNode<Connection> runner_next;
-            int num_fix = 0;
-            runner = exits.First;
+            LinkedListNode<Portal> runner = list.First;
+            LinkedListNode<Portal> runner2;
             while (runner != null)
             {
-                runner_next = runner.Next;
-                if (runner.Value.isBroke())
+                runner2 = runner.Next;
+                if (runner.Value == null)
                 {
-                    entries.Remove(runner.Value);
-                    num_fix--;
+                    list.Remove(runner);
                 }
-                else
-                {
-                    runner.Value.NumChange(num_fix);
-                }
-                runner = runner_next;
+                runner = runner2;
             }
         }
         public void ExitLevel(Exit exit_to)
         {
-            PlayerData.Data.AddLevel(num_level);
-            // TODO: link total number of levels
-            GlobalUI.Instance.UpdateGamesDoneFields(PlayerData.Data.NumLevels.ToString(), "7"); 
-            SceneManager.SceneMang.LoadScene(exit_to.connect_to.scene_num, exit_to.connect_to.target_portal_num);
+            PlayerData.Data.AddLevel(num_lvel, ent_num, exit_to.Num);
+            SceneManager.SceneMang.LoadSceneFromExit(num_lvel, exit_to.Num);
         }
-        public void EnterLevel(int num_ent)
+        public void EnterLevel(int lvl_num, int num_ent)
         {
-            PlayerData.Data.current_level = num_level;
+            num_lvel = lvl_num;
+            PlayerData.Data.current_level = num_lvel;
+            ent_num = num_ent;
             OrganizeEnters();
             OrganizeExits();
-            Connection enter = ConnectNum(entries, num_ent);
-            if (enter.ScenePortal == null || enter.ScenePortal is Exit)
-            {
-                return;
-            }
-            (enter.ScenePortal as Entrance).Enter();
+            (GetPortal(num_ent, entries) as Entrance).Enter();
+
         }
-        public Connection ConnectNum(LinkedList<Connection> data, int num)
+        public void EnterDefLevel(int lvl)
         {
-            LinkedListNode<Connection> runner = data.First;
-            for (int i = 0; i < num; i++)
-            {
-                if (runner == null)
-                {
-                    return new Connection(null, -100);
-                }
-                runner = runner.Next;
-            }
-            if (runner == null)
-            {
-                return new Connection(null, -100);
-            }
-            return runner.Value;
+            EnterLevel(lvl, defentr);
         }
         void OrganizeEnters()
         {
@@ -140,7 +90,7 @@ namespace Basic_Matrix
             Entrance[] order_enter = new Entrance[all_enter.Length];
             foreach (Entrance runner in all_enter)
             {
-                order_enter[runner.num_ent] = runner;
+                order_enter[runner.Num] = runner;
             }
             entries.Clear();
             foreach (Entrance runner in order_enter)
@@ -154,7 +104,7 @@ namespace Basic_Matrix
             Exit[] order_enter = new Exit[all_enter.Length];
             foreach (Exit runner in all_enter)
             {
-                order_enter[runner.num_exit] = runner;
+                order_enter[runner.Num] = runner;
             }
             entries.Clear();
             foreach (Exit runner in order_enter)
@@ -162,5 +112,17 @@ namespace Basic_Matrix
                 AddExit(runner);
             }
         }
+        Portal GetPortal(int num, LinkedList<Portal> list)
+        {
+            foreach (Portal runner in list)
+            {
+                if (runner.Num == num)
+                {
+                    return runner;
+                }
+            }
+            return null;
+        }
+
     }
 }

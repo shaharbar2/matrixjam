@@ -20,7 +20,7 @@ public class Transition : MonoBehaviour
     void Awake()
     {
         //numberOfScenes = numberOfScenes > 0 ? numberOfScenes : USceneManager.sceneCountInBuildSettings - 2;
-        exit.connect_to = new Connection() { scene_num = 1 + Random.Range(0, numberOfScenes), target_portal_num = 0 };
+        //exit.connect_to = new Connection() { scene_num = 1 + Random.Range(0, numberOfScenes), target_portal_num = 0 };
     }
 
     IEnumerator Start()

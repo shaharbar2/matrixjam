@@ -7,6 +7,7 @@ namespace Basic_Matrix
     public class SceneManager : MonoBehaviour
     {
 
+        public LevelConnects[] all_connects;
         private static SceneManager scenemg;
         public static SceneManager SceneMang
         {
@@ -19,10 +20,13 @@ namespace Basic_Matrix
                 return scenemg;
             }
         }
-
-        public void LoadScene(int num_sce,int num_port)
+        private void Start()
         {
-            switch(num_sce)
+            print(all_connects.LongLength);
+        }
+        public void LoadScene(int num_sce, int num_port)
+        {
+            switch (num_sce)
             {
                 case -1:
                     {
@@ -36,20 +40,35 @@ namespace Basic_Matrix
                     }
                 default:
                     {
-                        LoadScene("Scene_" + num_sce);
-                        LevelHolder.Level.EnterLevel(num_port);
+                        if (num_sce >= 0)
+                        {
+                            LoadScene("Scene_" + num_sce);
+                            LevelHolder.Level.EnterLevel(num_sce, num_port);
+                        }
                         break;
                     }
             }
-          
-        }
 
+        }
+        public void LoadSceneFromExit(int num_sce, int int_exit)
+        {
+            Connection ent_point = FindConnectTo(num_sce, int_exit);
+            LoadScene(ent_point.scene_to, ent_point.portal_to);
+        }
         public void LoadScene(string name)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(name);
         }
 
-        public void ResetLevelScene()
+        public Connection FindConnectTo(int level, int exit)
+        {
+            return all_connects[level].FindConnect(exit, true);
+        }
+    
+
+
+
+public void ResetLevelScene()
         {
             // check scene is not on start or end and actually a level scene
             var sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
@@ -61,4 +80,5 @@ namespace Basic_Matrix
 
     }
 }
+
 
