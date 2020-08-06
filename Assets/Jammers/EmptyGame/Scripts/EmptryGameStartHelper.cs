@@ -9,6 +9,7 @@ public class EmptyGameStartHelper : StartHelper
     public override void StartHelp(int num_ent)
     {
         // this is how the game starts
+        Debug.Log("Player Entered through entrance number:" + num_ent);
     }
     
     // Start is called before the first frame update
