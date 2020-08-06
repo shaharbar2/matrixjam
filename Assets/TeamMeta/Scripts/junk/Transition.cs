@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-using Basic_Matrix;
+using MatrixJam;
 
 public class Transition : MonoBehaviour
 {

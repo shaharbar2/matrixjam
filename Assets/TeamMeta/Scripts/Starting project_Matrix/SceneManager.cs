@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-namespace Basic_Matrix
+namespace MatrixJam
 {
     public class SceneManager : MonoBehaviour
     {

@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Basic_Matrix;
+using MatrixJam;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Basic_Matrix
+namespace MatrixJam
 {
     [UnitySingleton(UnitySingletonAttribute.Type.ExistsInScene, false)]
     public class GlobalUI : UnitySingleton<GlobalUI>

@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Basic_Matrix;
+using MatrixJam;
 using System;
 
-namespace Basic_Matrix
+namespace MatrixJam
 {
     public class LevelHolder : MonoBehaviour
     {
