@@ -73,6 +73,7 @@ namespace Basic_Matrix
 
         public void LoadSceneFromName(string name)
         {
+           //only load the scene from memory. This do not start the gameplay in the scene!
             UnityEngine.SceneManagement.SceneManager.LoadScene(name);
         }
         public Connection FindConnectTo(int level, int exit)
@@ -88,9 +89,9 @@ namespace Basic_Matrix
         {
             // check scene is not on start or end and actually a level scene
             var sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-            if (sceneName != "StartScene" && sceneName != "EndScene")
+            if (sceneName != "StartScene" && sceneName != "EndScene" && LevelHolder.Level != null)
             {
-                LoadSceneFromName(sceneName);
+                LevelHolder.Level.Restart();
             }
         }
     }

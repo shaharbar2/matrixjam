@@ -12,7 +12,7 @@ namespace Basic_Matrix
         Exit[] exits;
         int num_lvel;
         int ent_num;
-
+        public int def_ent;
         static LevelHolder level;
         public static LevelHolder Level
         {
@@ -32,7 +32,21 @@ namespace Basic_Matrix
         {
             if (SceneManager.SceneMang != null)
             {
-                EnterLevel(PlayerData.Data.current_level, SceneManager.SceneMang.Numentrence);
+                if (SceneManager.SceneMang.Numentrence >= 0)
+                {
+                    EnterLevel(PlayerData.Data.current_level, SceneManager.SceneMang.Numentrence);
+                    return;
+                }
+
+            }
+
+            if (PlayerData.Data != null)
+            {
+                EnterDefault(PlayerData.Data.current_level);
+            }
+            else
+            {
+                EnterDefault(0); // - change to number of group!
             }
         }
 
@@ -77,7 +91,10 @@ namespace Basic_Matrix
 
         }
 
-
+        public void EnterDefault(int lvl)
+        {
+            EnterLevel(lvl, def_ent);
+        }
         void OrganizeEnters()
         {
             Entrance[] all_enter = GameObject.FindObjectsOfType<Entrance>();
@@ -94,6 +111,13 @@ namespace Basic_Matrix
             foreach (Exit runner in all_exit)
             {
                 exits[runner.Num] = runner;
+            }
+        }
+        public void Restart()
+        {
+            if (SceneManager.SceneMang != null)
+            {
+                SceneManager.SceneMang.LoadScene(num_lvel, ent_num);
             }
         }
     }
