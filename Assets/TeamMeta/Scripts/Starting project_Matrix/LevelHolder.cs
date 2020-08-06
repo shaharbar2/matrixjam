@@ -4,7 +4,7 @@ using UnityEngine;
 using MatrixJam;
 using System;
 
-namespace MatrixJam.TeamMeta
+namespace MatrixJam
 {
     public class LevelHolder : MonoBehaviour
     {
