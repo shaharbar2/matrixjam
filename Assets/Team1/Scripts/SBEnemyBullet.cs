@@ -22,7 +22,7 @@ namespace MatrixJam.Team1
                 Invoke("DelayExit", 1.5f);
             }
             
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
         private void DelayExit()
