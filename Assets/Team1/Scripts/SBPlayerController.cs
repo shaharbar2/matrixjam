@@ -51,5 +51,10 @@ namespace MatrixJam.Team1
                 Instantiate(bulletPrefab, gunPos.position, gunPos.rotation);
             }
         }
+        
+        public void Kill()
+        {
+            Destroy(gameObject);
+        }
     }
 }

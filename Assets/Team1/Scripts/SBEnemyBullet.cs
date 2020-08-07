@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MatrixJam.Team1
 {
-    public class SBPlayerBullet : MonoBehaviour
+    public class SBEnemyBullet : MonoBehaviour
     {
         [SerializeField] private float bulletSpeed = 10f;
         
@@ -13,7 +13,7 @@ namespace MatrixJam.Team1
 
         private void OnCollisionEnter(Collision other)
         {
-            var temp = other.gameObject.GetComponent<SBEnemyController>();
+            var temp = other.gameObject.GetComponent<SBPlayerController>();
             if (temp != null)
             {
                 temp.Kill();
