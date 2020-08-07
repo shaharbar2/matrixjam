@@ -45,11 +45,16 @@ namespace MatrixJam.Team1
                 idlePositions.Add(lastPos);
             }
 
-            isChaser = Random.Range(0, 2) == 0;
+            isChaser = true; //Random.Range(0, 2) == 0;
         }
 
         private void Update()
         {
+            if (targetPlayer == null)
+            {
+                return;
+            }
+            
             CheckState();
             DoAccordingToState();
             timer += Time.deltaTime;
@@ -101,9 +106,9 @@ namespace MatrixJam.Team1
         private void Shoot()
         {
             
-            if (timer >= shootingRate && 
+            if (timer >= shootingRate /*&& 
                 Physics.Raycast(gunPos.position, transform.forward, out RaycastHit hit) && 
-                hit.transform.CompareTag("Player"))
+                hit.transform.CompareTag("Player")*/)
             {
                 timer = 0;
                 Instantiate(bulletPrefab, gunPos.position, gunPos.rotation);

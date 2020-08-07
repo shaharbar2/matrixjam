@@ -25,6 +25,7 @@ namespace MatrixJam.Team1
             {
                 timer = 0;
                 Instantiate(enemyController,new Vector3(Random.Range(-boardSize, boardSize), 0, Random.Range(-boardSize, boardSize)), Quaternion.identity);
+                
                 nextSpawnTime = animCurve.Evaluate(totalTimer);
             }
         }
