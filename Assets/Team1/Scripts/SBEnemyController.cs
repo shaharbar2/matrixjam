@@ -16,7 +16,7 @@ namespace MatrixJam.Team1
         }
         
         [SerializeField] private NavMeshAgent agent;
-        [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private SBEnemyBullet bulletPrefab;
         [SerializeField] private Transform gunPos;
         [SerializeField] private float shootingRate;
         
@@ -34,6 +34,16 @@ namespace MatrixJam.Team1
         private SBPlayerController targetPlayer;
         [SerializeField] private EnemyState state = EnemyState.idle;
 
+        [SerializeField] private TextMesh textMesh;
+
+        private int exit;
+        
+        public void Init(string nameTeam, int index)
+        {
+            textMesh.text = nameTeam;
+            exit = index;
+        }
+        
         private void Start()
         {
             targetPlayer = FindObjectOfType<SBPlayerController>();
@@ -111,7 +121,8 @@ namespace MatrixJam.Team1
                 hit.transform.CompareTag("Player")*/)
             {
                 timer = 0;
-                Instantiate(bulletPrefab, gunPos.position, gunPos.rotation);
+                var tempBullet = Instantiate(bulletPrefab, gunPos.position, gunPos.rotation);
+                tempBullet.exit = exit;
             }
             else
             {
@@ -135,6 +146,7 @@ namespace MatrixJam.Team1
 
         public void Kill()
         {
+            FindObjectOfType<SBScore>().AddScore();
             Destroy(gameObject);
         }
         

@@ -4837,7 +4837,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 3315124218042666433}
-  bulletPrefab: {fileID: 2302446166394387502, guid: 54a2e4c5987451b4a8211cd3790e2867,
+  bulletPrefab: {fileID: 3124662612075904475, guid: 54a2e4c5987451b4a8211cd3790e2867,
     type: 3}
   gunPos: {fileID: 3315124216231068372}
   shootingRate: 1
@@ -4845,6 +4845,7 @@ MonoBehaviour:
   distanceToShoot: 20
   isChaser: 0
   state: 0
+  textMesh: {fileID: 4249116485389970495}
 --- !u!195 &3315124218042666433
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5165,7 +5166,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 2
       minColor: {r: 0, g: 0.40526843, b: 1, a: 1}
-      maxColor: {r: 0.08811355, g: 1, b: 0, a: 1}
+      maxColor: {r: 0, g: 1, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 0.80729437, b: 0, a: 1}
@@ -9784,9 +9785,9 @@ TextMesh:
   m_Alignment: 1
   m_TabSize: 4
   m_FontSize: 250
-  m_FontStyle: 0
+  m_FontStyle: 1
   m_RichText: 0
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4289265561

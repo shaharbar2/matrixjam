@@ -5,6 +5,8 @@ namespace MatrixJam.Team1
     public class SBEnemyBullet : MonoBehaviour
     {
         [SerializeField] private float bulletSpeed = 10f;
+
+        public int exit;
         
         private void Update()
         {
@@ -17,9 +19,22 @@ namespace MatrixJam.Team1
             if (temp != null)
             {
                 temp.Kill();
+                Invoke("DelayExit", 1.5f);
             }
             
             Destroy(gameObject);
+        }
+
+        private void DelayExit()
+        {
+            foreach (var exitObj in FindObjectsOfType<Exit>())
+            {
+                if (exitObj.id == exit)
+                {
+                    exitObj.EndLevel();
+                    return;
+                }
+            }
         }
     }
 }

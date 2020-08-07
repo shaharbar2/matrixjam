@@ -14,9 +14,12 @@ namespace MatrixJam.Team1
         
         private float timer = 0;
         private Camera cam;
+
+        [SerializeField] private Entrance[] entrances;
         
         private void Start()
         {
+            transform.position = entrances[LevelHolder.Level.Entrnce_Used].transform.position;
             cam = Camera.main;
         }
 
