@@ -5,7 +5,8 @@ namespace MatrixJam.Team1
     public class SBPlayerBullet : MonoBehaviour
     {
         [SerializeField] private float bulletSpeed = 10f;
-        
+        [SerializeField] private GameObject bulletExplode;
+
         private void Update()
         {
             transform.position += transform.forward * (Time.deltaTime * bulletSpeed);
@@ -17,6 +18,10 @@ namespace MatrixJam.Team1
             if (temp != null)
             {
                 temp.Kill();
+            }
+            else
+            {
+                Instantiate(bulletExplode, transform.position, transform.rotation);
             }
             
             Destroy(gameObject);

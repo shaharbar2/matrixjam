@@ -23,8 +23,9 @@ namespace MatrixJam.Team1
         [SerializeField] private float distanceToChase = 15f;
         [SerializeField] private float distanceToShoot = 5f;
 
+        [SerializeField] private GameObject enemyExplode;
 
-         [SerializeField] private bool isChaser = false;
+        [SerializeField] private bool isChaser = false;
         
         private float timer = 0;
         
@@ -146,6 +147,7 @@ namespace MatrixJam.Team1
 
         public void Kill()
         {
+            Instantiate(enemyExplode, transform.position, transform.rotation);
             FindObjectOfType<SBScore>().AddScore();
             Destroy(gameObject);
         }

@@ -4843,6 +4843,8 @@ MonoBehaviour:
   shootingRate: 1
   distanceToChase: 30
   distanceToShoot: 20
+  enemyExplode: {fileID: 6525251370580325469, guid: 71512833753f1eb42b3c950a7cde0c5d,
+    type: 3}
   isChaser: 0
   state: 0
   textMesh: {fileID: 4249116485389970495}

@@ -5,6 +5,8 @@ namespace MatrixJam.Team1
     public class SBEnemyBullet : MonoBehaviour
     {
         [SerializeField] private float bulletSpeed = 10f;
+        [SerializeField] private GameObject bulletExplode;
+        [SerializeField] private GameObject playerExplode;
 
         public int exit;
         
@@ -20,9 +22,15 @@ namespace MatrixJam.Team1
             {
                 temp.Kill();
                 Invoke("DelayExit", 1.5f);
+                gameObject.SetActive(false);
+                Instantiate(playerExplode, transform.position, transform.rotation);
+            }
+            else
+            {
+                Instantiate(bulletExplode, transform.position, transform.rotation);
+                Destroy(gameObject);
             }
             
-            gameObject.SetActive(false);
         }
 
         private void DelayExit()
